@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=0" />
+
+    <link rel="stylesheet" type="text/css" href="css/animate.css" />
+    <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+    <script type='text/javascript' src='js/fastclick.min.js'></script>
+    <script type='text/javascript' src='./js/jquery-2.1.4.min.js'></script>
+    <script type='text/javascript' src='./js/materialize.js'></script>
+    
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <script type='text/javascript' src='./js/data.js'></script>
+    <script type='text/javascript' src='./js/index.js'></script>
+    <script src="cordova.js"></script>
+    <title>4 Letter Words</title>
+</head>
+
+<body class='Site'>
+    <nav id='bar' class="" role="navigation">
+
+        <ul id="slide-out" class="side-nav  full">
+            <h4 class='center-align'><span class='boldText'>4</span><span class='light'>letterwords.</span></h4>
+            <li class='sideLink'>
+                <div>
+                    <a href="#" onclick="window.open('http://4letterwords.net', '_system');" class='white-text'>
+                        <i class=" small left  mdi-action-help"></i>About</a>
+                </div>
+            </li>
+            <li class='sideLink'>
+                <div>
+                    <a href="#" onclick="window.open('http://www.kiva.org/lender/4letterwords', '_system');" class='white-text'>
+                        <i class=" small left mdi-maps-local-hospital"></i>Direct Support</a>
+                </div>
+            </li>
+            <!-- <li class='sideLink' ><div><a class='white-text' onclick="window.plugins.socialsharing.share('Check out this trivia game, it is pretty dope.', null, 'www/iconoriginal.png', 'http://4letterwords.net')">
+                  <i class=" small left mdi-social-share"></i>Share</a></div></li>-->
+            <!-- <li class='sideLink'><div><a class="white-text modal-trigger" href="#modal1">Modal<i class=" small left mdi-action-settings"></i></a></div></li>-->
+        </ul>
+
+
+        <a id='menu' href="#" data-activates="slide-out" class="button-collapse show-on-large">
+            <i class="large mdi-navigation-menu"></i>
+        </a>
+        <div class=" nav-wrapper  ">
+
+            <a id="logo-container" href="#" class="brand-logo"></a>
+            <div id='score' class='right'>1000</div>
+
+        </div>
+
+
+
+
+    </nav>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Settings</h4>
+            <div class='row'>
+                <div class='col s5 '>Beta Testing</div>
+                <div class='col s7 '>
+
+                    <div class="switch ">
+                        <label>
+                            Off
+                            <input type="checkbox">
+                            <span class="lever"></span> On
+                        </label>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+    <main class='Site-content '>
+
+        <div id='wrapper' class='row'>
+            <div class='col s1'>&nbsp;</div>
+            <div class="col s10 card z-depth-1 " id='topBox'>
+
+
+
+
+                <div id='clue' class="white-text flow-text">
+
+                </div>
+                <!-- </div>
+           <div class='container  '>
+              <div class='col s8 hidden'>
+      <input type="checkbox" class='filled-in' id="isRemovable" />
+      <label for="isRemovable" class='white-text flow-text'>Mark for removal.</label>-->
+                <div class='  btn right center-align   ' id='hint' onclick='hint()'>Hint</div>
+                <div class='section'>&nbsp;</div>
+
+
+
+
+            </div>
+            <div class='col s1'>&nbsp;</div>
+        </div>
+
+    </main>
+
+    <footer id='box' class=' section   white-text'>
+
+
+        <div class='row ' id='answer'></div>
+            <ul id='availableLetters' class='center '></ul>
+
+
+    </footer>
+
+</body>
+<script>
+    var admobid = {};
+    if (/(android)/i.test(navigator.userAgent)) {
+        admobid = { // for Android
+            banner: 'ca-app-pub-2414123538944270/6163154549',
+            interstitial: 'ca-app-pub-2414123538944270/4686421349'
+        };
+    } else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+        admobid = { // for iOS
+            banner: 'ca-app-pub-2414123538944270/9116620947',
+            interstitial: 'ca-app-pub-2414123538944270/1593354148'
+        };
+    } else {
+        admobid = { // for Windows Phone
+            banner: 'ca-app-pub-2414123538944270/6023553742',
+            interstitial: 'ca-app-pub-2414123538944270/7500286944'
+        };
+    }
+
+    function initApp() {
+        if (AdMob) {
+            AdMob.prepareInterstitial({
+                adId: admobid.interstitial,
+
+                autoShow: false
+            });
+        }
+
+    }
+    if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function() {
+            FastClick.attach(document.body);
+        }, false);
+    }
+    $(document).ready(function() {
+        $('.modal-trigger').leanModal();
+    });
+    $('.button-collapse').sideNav();
+
+    document.addEventListener('deviceready', initApp, false);
+
+</script>
+
+</html>

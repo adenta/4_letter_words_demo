@@ -1,0 +1,75 @@
+/* Custom Stylesheet */
+
+
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.icon-block {
+    padding: 0 15px;
+}
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 27%;
+}
+.letter {
+    list-style-type: none;
+    display: inline-block;
+    width: 14%;
+    font-size: 280%;
+    text-transform: capitalize;
+}
+#card-title {
+    font-weight: 700;
+}
+#donate {
+    font-color: white;
+}
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+#toChange {
+    font-size: 200%;
+}
+.ans {
+    padding-left: 6%;
+    padding-right: 6%;
+}
+#logo-container {
+    font-size: 120%
+}
+#score {
+    padding-right: 2%;
+}
+#menu {
+    margin-left: 1%;
+}
+.boldText {
+    font-weight: 800;
+}
+* {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+input {
+    -webkit-user-select: auto !important;
+    -khtml-user-select: auto !important;
+    -moz-user-select: auto !important;
+    -ms-user-select: auto !important;
+    user-select: auto !important;
+}
+* {
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
+}
