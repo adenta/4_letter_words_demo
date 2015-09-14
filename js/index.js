@@ -375,5 +375,6 @@ window.onload = function () {
     storage.setItem('score', stats.score);
     storage.setItem('question', questionPos);
     storage.setItem('streak', stats.streak);
+    document.body.style.visibility = 'visible';
 
 };

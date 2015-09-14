@@ -2,6 +2,12 @@
 <html>
 
 <head>
+    <style>
+        body {
+            visibility: hidden;
+        }
+
+    </style>
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
@@ -13,7 +19,7 @@
     <script type='text/javascript' src='js/fastclick.min.js'></script>
     <script type='text/javascript' src='./js/jquery-2.1.4.min.js'></script>
     <script type='text/javascript' src='./js/materialize.js'></script>
-    
+
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <script type='text/javascript' src='./js/data.js'></script>
     <script type='text/javascript' src='./js/index.js'></script>
@@ -115,14 +121,13 @@
 
 
         <div class='row ' id='answer'></div>
-            <ul id='availableLetters' class='center '></ul>
+        <ul id='availableLetters' class='center '></ul>
 
 
     </footer>
 
 </body>
 <script>
-
     if ('addEventListener' in document) {
         document.addEventListener('DOMContentLoaded', function() {
             FastClick.attach(document.body);
@@ -132,6 +137,7 @@
         $('.modal-trigger').leanModal();
     });
     $('.button-collapse').sideNav();
+
 </script>
 
 </html>
