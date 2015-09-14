@@ -17,7 +17,6 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <script type='text/javascript' src='./js/data.js'></script>
     <script type='text/javascript' src='./js/index.js'></script>
-    <script src="cordova.js"></script>
     <title>4 Letter Words</title>
 </head>
 
@@ -123,34 +122,7 @@
 
 </body>
 <script>
-    var admobid = {};
-    if (/(android)/i.test(navigator.userAgent)) {
-        admobid = { // for Android
-            banner: 'ca-app-pub-2414123538944270/6163154549',
-            interstitial: 'ca-app-pub-2414123538944270/4686421349'
-        };
-    } else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
-        admobid = { // for iOS
-            banner: 'ca-app-pub-2414123538944270/9116620947',
-            interstitial: 'ca-app-pub-2414123538944270/1593354148'
-        };
-    } else {
-        admobid = { // for Windows Phone
-            banner: 'ca-app-pub-2414123538944270/6023553742',
-            interstitial: 'ca-app-pub-2414123538944270/7500286944'
-        };
-    }
 
-    function initApp() {
-        if (AdMob) {
-            AdMob.prepareInterstitial({
-                adId: admobid.interstitial,
-
-                autoShow: false
-            });
-        }
-
-    }
     if ('addEventListener' in document) {
         document.addEventListener('DOMContentLoaded', function() {
             FastClick.attach(document.body);
@@ -160,9 +132,6 @@
         $('.modal-trigger').leanModal();
     });
     $('.button-collapse').sideNav();
-
-    document.addEventListener('deviceready', initApp, false);
-
 </script>
 
 </html>

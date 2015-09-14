@@ -1,52 +1,3 @@
-//This code is neded for Phonegap to work
-var app = {
-    // Application Constructor
-    initialize: function () {
-        this.bindEvents();
-    },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function () {
-
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function () {
-        app.receivedEvent('deviceready');
-
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function (id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
-    }
-
-};
-
-
-//AdListeners: These functions respond to AdEvents
-document.addEventListener('onAdLoaded', function (data) {
-    interstitialIsReady = true;
-});
-document.addEventListener('onAdFailLoad', function (data) {
-    console.log(data.error + ',' + data.reason);
-    if (data.adType == 'banner') AdMob.hideBanner();
-    else if (data.adType == 'interstitial') interstitialIsReady = false;
-});
-
-
-
 /* static variables */
 var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '*'];
 var storage = window.localStorage;
@@ -60,13 +11,12 @@ var word = []; //represents the correct word
 var shown = []; //represents the word the player can see, as well as their guess.
 var maxLetters = 7; // maximum amount of letters to pick from
 var lastDate = new Date(); //last time and date a question was answered correctly
-var interstitialIsReady = false; //Global variable, representing weather or not an advertisement is ready to be played.
 var minutesTillNextFunds = 60; //time until you can recieve your next free points.
 var changing = false; //global variable denoting weather or not the question is currently switching between questions. This is used in timing when events happen.
-var primaryColor = 'blue';
-var accentColor = 'deep-orange';
+var primaryColor = 'blue-grey';
+var accentColor = 'teal';
 var toastRunning = false; //global variable denoting weather or not a toast message is currently on the screen. this is used so the screen does not overflow with toast messages.
-
+var correct = 0; //number of correct answers guessed.
 
 /* Functions */
 
@@ -177,23 +127,7 @@ function toast(message) {
         Materialize.toast(message, toastLength, accentColor + ' flow-text');
     }
 }
-//displays an Ad, if an ad is available.
-function runAd() {
-    if (window.AdMob) {
-        AdMob.showInterstitial();
-        interstitialIsReady = false;
-        stats.score += 75;
-        hint();
-        AdMob.prepareInterstitial({
-            adId: admobid.interstitial,
 
-            autoShow: false
-        });
-    } else {
-        toast();
-
-    }
-}
 
 //decreases the score, if it is possible to decrease the score. returns a boolean, indicating success or failure. this could be optimised.
 function decScore() {
@@ -223,8 +157,6 @@ function hint() {
                     done = true;
                 }
             }
-        } else if (interstitialIsReady) {
-            runAd();
         } else {
             morePoints();
 
@@ -297,6 +229,7 @@ function nextQuestion() {
     questionPos++;
     pos = 0;
     questionPos = questionPos % data.length;
+
     document.getElementById('clue').innerHTML = '<div  id="card-title" class="card-title">' + data[questionPos].category + '</div>' + '<p>' + data[questionPos].question + '</p>';
 
 
@@ -318,7 +251,7 @@ function nextQuestion() {
 
 //sets the letters the player can see.
 function setLetters() {
-    
+
     var toreturn = "";
     var items = [];
     var unique = 0;
@@ -337,7 +270,7 @@ function setLetters() {
             var returning = '<li class="letter" ';
 
             returning += 'onclick="change(' + i + ')" ';
-            returning += 'id=li-' + i +' ">' + alphabet[i] + '</li>';
+            returning += 'id=li-' + i + ' ">' + alphabet[i] + '</li>';
             thisObj.id = i;
             thisObj.htmlValue = returning;
             thisObj.isUsed = false;
@@ -369,11 +302,11 @@ function setLetters() {
 
 //controls what is seen. This is called once the question is guessed. Also shows ads given a condition
 function next() {
-
+    correct++;
+    storage.setItem('correct', correct);
     shown.splice(data[questionPos], Number.MAX_VALUE); //removes extra letters.
-    word.splice(data[questionPos], Number.MAX_VALUE);
-    var newQuestionNumber = questionPos - storage.getItem('starting_point');
-    document.getElementById('logo-container').innerHTML = newQuestionNumber;
+
+    document.getElementById('logo-container').innerHTML = correct;
     nextQuestion();
     setLetters();
 
@@ -397,7 +330,7 @@ window.onload = function () {
     document.getElementById('hint').className = accentColor + "  btn right center-align";
     document.getElementById('topBox').className = primaryColor + " col s10 card  z-depth-1 ";
     document.getElementById('box').className = primaryColor + " section white-text ";
-    document.getElementById('slide-out').className='side-nav  full ' + primaryColor;
+    document.getElementById('slide-out').className = 'side-nav  full ' + primaryColor;
 
 
 
@@ -411,7 +344,9 @@ window.onload = function () {
     if (storage.question) {
 
         questionPos = storage.getItem('question') - 1;
+
         document.getElementById('logo-container').innerHTML = questionPos - storage.getItem('starting_point');
+
     } else {
 
         questionPos = Math.floor(Math.random() * data.length);
@@ -422,6 +357,11 @@ window.onload = function () {
     if (storage.lastUsed) {
         lastDate = new Date(Date.parse(storage.getItem("lastUsed")));
         morePoints(200, "Welcome Back!");
+    }
+    if (storage.correct) {
+        correct = storage.getItem('correct');
+        document.getElementById('logo-container').innerHTML = correct;
+
     }
 
     stats.streak = storage.getItem('streak');
@@ -435,6 +375,5 @@ window.onload = function () {
     storage.setItem('score', stats.score);
     storage.setItem('question', questionPos);
     storage.setItem('streak', stats.streak);
-    initApp();
 
 };
